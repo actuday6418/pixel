@@ -1,0 +1,5 @@
+
+The picc format is used to define 8 bit 16 X 16 images. I understand this is overkill. But I can't use a format like PPM or BMP because of how inefficient they are and I can't understand compressed formats like PNG.
+
+FORMAT
+The image is defined as 16 pixels by 16, each consisting of an 8 bit number. So basically this is a binary file with 256 numbers, each 1 byte.  

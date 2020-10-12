@@ -22,7 +22,7 @@ public:
   {
     window.setFramerateLimit (FPS);
   }
-  void start ()
+  void start (void (*mapper) (uint8_t[4096]))
   {
     while (window.isOpen ())
       {
@@ -34,7 +34,7 @@ public:
 	  }
 
 	window.clear ();
-	setColors ();
+	setColors (mapper);
 	window.draw (varray);
 	window.display ();
       }
@@ -51,14 +51,19 @@ public:
 	varray[k + 3].position = sf::Vector2f (i * 10, j * 10 + 10);
       }
   }
-  void setColors ()
+  void setColors (void (*mapper) (uint8_t[4096]))
   {
-    for (int k = 0; k < 16384; k += 4)
+    uint8_t array[4096];
+    (*mapper) (array);
+    for (int k = 0, i = 0; k < 16384; k += 4, i++)
       {
-	varray[k].color = sf::Color::Red;
-	varray[k + 1].color = sf::Color::Green;
-	varray[k + 2].color = sf::Color::Blue;
-	varray[k + 3].color = sf::Color::White;
+	if (array[i] == 0)
+	  {
+	    varray[k].color = sf::Color::Black;
+	    varray[k + 1].color = sf::Color::Black;
+	    varray[k + 2].color = sf::Color::Black;
+	    varray[k + 3].color = sf::Color::Black;
+	  }
       }
   }
 };
