@@ -8,7 +8,7 @@ An implementation on top of SFML for efficiently rendering pixel formats like BM
     cmake --build .
     
 #  Incremental builds
-    ```./build.sh```
+```sh build.sh```
 This script builds the app and performs code formatting. 
 
 # Dependencies 
