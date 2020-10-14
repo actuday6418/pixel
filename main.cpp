@@ -1,21 +1,25 @@
-#include "pixel.h"
-#include<fstream>
+#include "include/pixel.h"
 #include<iostream>
+#include "include/noise.h"
+#include<chrono>
 
 void
 mapper (uint8_t array[4096])
 {
-  std::ifstream file ("output.picc", std::ios::binary | std::ios::in);
-  uint8_t x;
-  int i = 0;
-  while (!file.eof ())
+  uint8_t array_temp[256];
+  for (int i = 0, j = 0; i < 4096; i++, j++)
     {
-      file.read (reinterpret_cast < char *>(&x), sizeof (x));
-      array[i++] = x;
+      if (j == 256)
+	{
+	  noise::whiteNoise (array_temp,
+			     (int) std::chrono::system_clock::now ().
+			     time_since_epoch ().count ());
+	  j = 0;
+	  for (int k = i - 256, l = 0; k < i; k++, l++)
+	    array[i] = array_temp[l];
+	}
+      array_temp[j] = array[i];
     }
-  i -= 2;
-  for (int j = i; j < 4096; j++)
-    array[j] = 255;
 }
 
 int
@@ -24,6 +28,7 @@ main ()
   pixelMap map;
   map.setTitle ("Title");
   map.setFPS (2);
+  map.logger ();
   map.start (mapper);
   return 0;
 }
