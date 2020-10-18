@@ -37,13 +37,12 @@ public:
     int delta = 0, prev_sec = 0, new_sec;
     while (window.isOpen ())
       {
-	std::cout << "." << std::endl;
 	if (tick == FPS && log)
 	  {
 	    new_sec = (int) clock.getElapsedTime ().asSeconds ();
 	    delta = new_sec - prev_sec;
-	    std::
-	      cout << "Time to " << FPS << " frames: " << delta << std::endl;
+	    std::cout << "Time to " << FPS << " frames: " << delta << std::
+	      endl;
 	    tick = 1;
 	  }
 	sf::Event event;
@@ -84,6 +83,13 @@ public:
 	    varray[k + 1].color = sf::Color::Black;
 	    varray[k + 2].color = sf::Color::Black;
 	    varray[k + 3].color = sf::Color::Black;
+	  }
+	else
+	  {
+	    varray[k].color = sf::Color::White;
+	    varray[k + 1].color = sf::Color::White;
+	    varray[k + 2].color = sf::Color::White;
+	    varray[k + 3].color = sf::Color::White;
 	  }
       }
   }
