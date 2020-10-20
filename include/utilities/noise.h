@@ -1,9 +1,10 @@
-#include<iostream>
 #include<cstdlib>
 
+//encapsulates noise functions for generating random values in each pixel
 class noise
 {
 public:
+  //the argument 'seed' must itself be random
   static void whiteNoise (uint8_t array[256], const int seed)
   {
     srand (seed);

@@ -9,13 +9,18 @@ class pixelMap
   sf::VertexArray varray;
   sf::RenderWindow window;
   bool log;
+
+  //default value is sixty
   int FPS;
 
 public:
+  //default constructor
     pixelMap ():varray (sf::Quads, 16384), window (sf::VideoMode (640, 640),
 						   "New Window")
   {
     setPositions ();
+    FPS = 60;
+    log = false;
   };
   void setTitle (const std::string & title)
   {
@@ -24,7 +29,7 @@ public:
   void setFPS (unsigned int FPS)
   {
     window.setFramerateLimit (FPS);
-    FPS = FPS;
+    this->FPS = FPS;
   }
   void logger ()
   {

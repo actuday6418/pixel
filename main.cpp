@@ -1,11 +1,11 @@
-#include "include/pixel.h"
+#include "include/A0/pixel.h"
 #include<iostream>
-#include "include/noise.h"
+#include "include/utilities/noise.h"
 #include<chrono>
 #include<cstdlib>
 
 void
-mapper (uint8_t array[4096])
+white_noise_mapper (uint8_t array[4096])
 {
   uint8_t array_temp[256];
   for (int i = 0, j = 0; i <= 4096; i++, j++)
@@ -20,7 +20,6 @@ mapper (uint8_t array[4096])
 	    }
 	}
       array_temp[j] = array[i];
-      array[4000] = rand () % 2 ? 0 : 255;
     }
 }
 
@@ -30,7 +29,7 @@ main ()
   pixelMap map;
   srand (45);
   map.setTitle ("Title");
-  map.setFPS (1);
-  map.start (mapper);
+  map.setFPS (60);
+  map.start (white_noise_mapper);
   return 0;
 }
