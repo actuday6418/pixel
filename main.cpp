@@ -8,7 +8,7 @@ void
 mapper (uint8_t array[4096])
 {
   uint8_t array_temp[256];
-  for (int i = 0, j = 0; i < 4096; i++, j++)
+  for (int i = 0, j = 0; i <= 4096; i++, j++)
     {
       if (j == 256)
 	{
@@ -20,6 +20,7 @@ mapper (uint8_t array[4096])
 	    }
 	}
       array_temp[j] = array[i];
+      array[4000] = rand () % 2 ? 0 : 255;
     }
 }
 
@@ -29,6 +30,7 @@ main ()
   pixelMap map;
   srand (45);
   map.setTitle ("Title");
+  map.setFPS (1);
   map.start (mapper);
   return 0;
 }
