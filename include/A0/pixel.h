@@ -14,7 +14,6 @@ class pixelMap
   int FPS;
 
 public:
-  //default constructor
     pixelMap ():varray (sf::Quads, 16384), window (sf::VideoMode (640, 640),
 						   "New Window")
   {
@@ -35,6 +34,7 @@ public:
   {
     log = true;
   }
+  //contains main loop
   void start (void (*mapper) (uint8_t[4096]))
   {
     sf::Clock clock;
@@ -64,6 +64,7 @@ public:
 	tick++;
       }
   }
+  //called once to set positions of each pixel
   void setPositions ()
   {
     for (int k = 0; k < 16384; k += 4)
@@ -76,6 +77,8 @@ public:
 	varray[k + 3].position = sf::Vector2f (i * 10, j * 10 + 10);
       }
   }
+  //called every frame to set color of each pixel.
+  //the argument mapper is a function pointer to a function that returns an array of uint8_t 
   void setColors (void (*mapper) (uint8_t[4096]))
   {
     uint8_t array[4096];
