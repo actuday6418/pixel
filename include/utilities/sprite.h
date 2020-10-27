@@ -3,38 +3,52 @@
 
 #include<fstream>
 
-struct node {
+struct sprite_pixel {
 	uint8_t data;
-	node* next;
+	sprite_pixel* next;
 };
 
 class sprite {
-	node* map;
+	sprite_pixel* map;
+	sprite_pixel* iter;
 
 public:
 	sprite(uint8_t side){
 		side *= side;
-		map = new node;
-		node* x = map;
+		map = new sprite_pixel;
+		sprite_pixel* x = map;
 		for(int i=0;i<side-1;i++) {
-			node* next = new node;
+			sprite_pixel* next = new sprite_pixel;
 			x->next = next;
 			x = next;
 			x->next = NULL;
 		}
+		iter = NULL;
 	}
 	~sprite(){
-		node* x = map;
-		node* y;
+		sprite_pixel* x = map;
+		sprite_pixel* y;
 		while(x != NULL){
 			y = x;
 			x = x->next;
 			delete y;
 		}
 	}
-	uint8_t loadSprite(std::string path){
+	uint8_t next(){
+		if(iter == NULL) {
+			iter = map;
+		}
+		else {
+		iter = iter->next;
+		}
+		return iter->data;
+	}
+	void reset_iter(){
+		iter = map;
+	}
+	int loadSprite(std::string path){
 		uint8_t no;
-		node* x = map;
+		sprite_pixel* x = map;
 		std::ifstream file(path, std::ios::in | std::ios::binary);
 		if(!file) {
 			std::cout<<"Invalid sprite!";
@@ -52,6 +66,7 @@ public:
 			}
 		}
 		file.close();
+		return 0;
 	}
 };
 #endif

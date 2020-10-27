@@ -28,6 +28,15 @@ int
 main ()
 {
   sprite s (16);
+  if (s.loadSprite ("output.sprite") == -1)
+    {
+      std::cout << "ERR" << std::endl;
+      return -1;
+    }
+  for (int i = 0; i < 256; i++)
+    {
+      std::cout << s.next () << std::endl;
+    }
   pixelMap map;
   srand (45);
   map.setTitle ("Title");
