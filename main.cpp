@@ -1,6 +1,7 @@
 #include "include/A0/pixel.h"
 #include<iostream>
 #include "include/utilities/noise.h"
+#include "include/utilities/sprite.h"
 #include<chrono>
 #include<cstdlib>
 
@@ -26,6 +27,7 @@ white_noise_mapper (uint8_t array[4096])
 int
 main ()
 {
+  sprite s (16);
   pixelMap map;
   srand (45);
   map.setTitle ("Title");

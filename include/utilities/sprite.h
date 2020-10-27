@@ -1,12 +1,12 @@
-#ifndef SPRITE_H
-#define
+#ifndef SPRITE_H	
+#define SPRITE_H
 
 #include<fstream>
 
 struct node {
 	uint8_t data;
 	node* next;
-}
+};
 
 class sprite {
 	node* map;
@@ -32,22 +32,26 @@ public:
 			delete y;
 		}
 	}
-	void loadSprite(std::string path){
+	uint8_t loadSprite(std::string path){
 		uint8_t no;
 		node* x = map;
 		std::ifstream file(path, std::ios::in | std::ios::binary);
+		if(!file) {
+			std::cout<<"Invalid sprite!";
+			return -1;
+		}
 		while(x != NULL) {
-			if(eof()){
-				x.data = 0;
+			if(file.eof()){
+				x->data = 0;
 				x = x->next;
 			}
 			else {
-			file.read(no,1);
-			x.data = no;
+			file.read((char*)&no,1);
+			x->data = no;
 			x = x->next;
 			}
 		}
 		file.close();
 	}
-}
+};
 #endif
