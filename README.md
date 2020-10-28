@@ -1,5 +1,5 @@
 # pixel
-An implementation on top of SFML for efficiently rendering pixel formats like BMP/PMM with high FPS
+An implementation on top of SFML for efficiently rendering pixel formats like BMP/PMM. And for making video games.
 
 # Building
     chmod a+x give_me_exec.sh
@@ -11,6 +11,9 @@ An implementation on top of SFML for efficiently rendering pixel formats like BM
 #  Incremental builds
 ```./give_me_exec.sh```
 This script builds the app and performs code formatting. 
+
+# The sprite format
+Check out sprite.md
 
 # Dependencies 
 1. SFML
