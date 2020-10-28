@@ -13,12 +13,15 @@ class sprite {
 	sprite_pixel* iter;
 
 public:
-	sprite(uint8_t side){
+	sprite(int side){
 		side *= side;
 		map = new sprite_pixel;
+		map->data = 0;
 		sprite_pixel* x = map;
+		std::cout<<(int)side<<std::endl;
 		for(int i=0;i<side-1;i++) {
 			sprite_pixel* next = new sprite_pixel;
+			next->data = 0;
 			x->next = next;
 			x = next;
 			x->next = NULL;

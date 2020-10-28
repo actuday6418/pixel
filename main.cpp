@@ -27,16 +27,15 @@ white_noise_mapper (uint8_t array[4096])
 int
 main ()
 {
-  sprite s (16);
+  sprite s ((int) 16);
   if (s.loadSprite ("output.sprite") == -1)
     {
       std::cout << "ERR" << std::endl;
       return -1;
     }
   for (int i = 0; i < 256; i++)
-    {
-      std::cout << s.next () << std::endl;
-    }
+    std::cout << (int) s.next () << " ";
+
   pixelMap map;
   srand (45);
   map.setTitle ("Title");

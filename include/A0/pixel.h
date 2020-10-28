@@ -46,8 +46,8 @@ public:
 	  {
 	    new_sec = (int) clock.getElapsedTime ().asSeconds ();
 	    delta = new_sec - prev_sec;
-	    std::cout << "Time to " << FPS << " frames: " << delta << std::
-	      endl;
+	    std::
+	      cout << "Time to " << FPS << " frames: " << delta << std::endl;
 	    tick = 1;
 	  }
 	sf::Event event;
