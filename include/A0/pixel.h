@@ -6,6 +6,7 @@
 
 class pixelMap
 {
+	protected:
   sf::VertexArray varray;
   sf::RenderWindow window;
   bool log;
