@@ -6,11 +6,11 @@
 
 class pixelMap
 {
-	protected:
+protected:
   sf::VertexArray varray;
   sf::RenderWindow window;
   bool log;
-
+  int tik_factor;
   //default value is sixty
   int FPS;
 
@@ -19,6 +19,7 @@ public:
 						   "New Window")
   {
     setPositions ();
+    tik_factor = 1;
     FPS = 60;
     log = false;
   };
@@ -35,20 +36,30 @@ public:
   {
     log = true;
   }
+  void setTickFactor (int fac)
+  {
+    tik_factor = fac;
+  }
+  //override this function for updates each tick.
+  void tickTok ()
+  {
+  }
   //contains main loop
   void start (void (*mapper) (uint8_t[4096]))
   {
     sf::Clock clock;
-    uint8_t tick = 1;
+    int tick = 1;
     int delta = 0, prev_sec = 0, new_sec;
     while (window.isOpen ())
       {
-	if (tick == FPS && log)
+	if (tick == FPS / tik_factor)
 	  {
+	    tickTok ();
 	    new_sec = (int) clock.getElapsedTime ().asSeconds ();
 	    delta = new_sec - prev_sec;
-	    std::
-	      cout << "Time to " << FPS << " frames: " << delta << std::endl;
+	    if (log)
+	      std::cout << "Time to " << FPS << " frames: " << delta <<
+		std::endl;
 	    tick = 1;
 	  }
 	sf::Event event;

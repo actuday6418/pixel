@@ -11,9 +11,10 @@ main (int argc, char *argv[])
       string path = argv[1];
       ifstream file (path);
       uint8_t x;
-      int side,i = 0;
-      file.read((char*)&side,sizeof(int));
-      cout<<"Contents of this "<<side<<"x"<<side<<" sprite file:\n";
+      int side_x,side_y,i = 0;
+      file.read((char*)&side_x,sizeof(int));
+      file.read((char*)&side_y,sizeof(int));
+      cout<<"Contents of this "<<side_x<<"x"<<side_y<<" sprite file:\n";
       while (true)
 	{
 	  file.read ((char *) &x, sizeof (x));
@@ -21,9 +22,9 @@ main (int argc, char *argv[])
 		  break;
 	  i++;
 	  cout<<(int)x<<" ";
-	  if(i%side == 0)	cout<<endl;
+	  if(i%side_x == 0)	cout<<endl;
 	}
-      if(i != side*side)	cout<<"This sprite file is incomplete ";
+      if(i != side_x*side_y)	cout<<"This sprite file is incomplete ";
     }
   else
     cout << "Enter one argument - The name of the sprite file!\n";
