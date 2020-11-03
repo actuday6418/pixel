@@ -5,34 +5,19 @@
 #include<chrono>
 #include<cstdlib>
 
-void
-white_noise_mapper (uint8_t array[4096])
-{
-  uint8_t array_temp[256];
-  for (int i = 0, j = 0; i <= 4096; i++, j++)
-    {
-      if (j == 256)
-	{
-	  noise::whiteNoise (array_temp, rand ());
-	  j = 0;
-	  for (int k = i - 256, l = 0; k < i; k++, l++)
-	    {
-	      array[k] = array_temp[l];
-	    }
-	}
-      array_temp[j] = array[i];
-    }
-}
+class app:public pixelMap {
+	void mapper(std::vector < uint8_t > &array) {
+		noise::whiteNoise(array, rand());
+}};
 
-int
-main ()
+int main()
 {
-  pixelMap map;
-  sprite s (3, 3);
-  srand (45);
-  map.logger ();
-  map.setTitle ("Title");
-  map.setFPS (60);
-  map.start (white_noise_mapper);
-  return 0;
+	app map;
+
+	srand(45);
+	map.setTitle("Title");
+	map.setFPS(60);
+	map.logger();
+	map.mainLoop();
+	return 0;
 }
