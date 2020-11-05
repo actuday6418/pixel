@@ -1,23 +1,26 @@
-#include "include/A0/pixel.h"
 #include<iostream>
+#include "include/A1/application.h"
 #include "include/utilities/noise.h"
-#include "include/utilities/sprite.h"
-#include<chrono>
-#include<cstdlib>
 
-class app:public pixelMap {
-	void mapper(std::vector < uint8_t > &array) {
-		noise::whiteNoise(array, rand());
+using namespace std;
+
+auto noise_gen =
+    [](vector < uint8_t > &array) { noise::whiteNoise(array, rand());
+	return true;
+};
+
+class my:public application {
+	void tickTok() override {
 }};
 
 int main()
 {
-	app map;
+	my app;
 
-	srand(45);
-	map.setTitle("Title");
-	map.setFPS(60);
-	map.logger();
-	map.mainLoop();
-	return 0;
+	srand(43);
+	vector < RULE * >rule_set;
+	rule_set.push_back(noise_gen);
+	app.logger();
+	app.setRules(rule_set);
+	app.begin();
 }

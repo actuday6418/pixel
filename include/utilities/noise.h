@@ -11,4 +11,6 @@ class noise {
 				array[i] = (uint8_t) 255;
 			else
 				array[i] = (uint8_t) 0;
-}}};
+		}
+	}
+};

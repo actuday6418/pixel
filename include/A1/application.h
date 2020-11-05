@@ -5,28 +5,34 @@
 #include "../utilities/sprite.h"
 #include<iostream>
 
+using RULE = bool(std::vector<uint8_t>&);
+
 struct layer {
 	std::vector<sprite> sprite_vec;
 	//add a new sprite to the sprite list.
-	addSprite(string path, int side_x,int side_y){
+	void addSprite(std::string path, int side_x,int side_y){
 		sprite s(side_x, side_y);
 		s.loadSprite(path);
-		sprite_vec.push(s);
+		sprite_vec.push_back(s);
 	}
-}
+};
 
 class application: public pixelMap {
 	std::vector<layer> layer_vec;
-	void tickTok () override {
-		std::cout<<"Hello\n";
+	std::vector<RULE*> rule_book;
+	//internal function for rules callback
+	void rulesEnforcer(std::vector<uint8_t> &map){
+		for(auto r: rule_book){
+			r(map);
+		}
 	}
 	//returns the bounds of the part of a sprite that is visible
 	auto pixelCuller (int topLeftX, int topLeftY, int dimx, int dimy){
-		if(topLeftY > 64 || topLeftY + dimy < 0 || topLeftX > 255 || topLeftX + dimx < 0) {
-			std::cout<<"Zilch";
-		}
 		struct returnDimensions {
 			int a,b,c,d,x,y,z,h;
+		};
+		if(topLeftY > 64 || topLeftY + dimy < 0 || topLeftX > 255 || topLeftX + dimx < 0) {
+			std::cout<<"Zilch";
 		}
 		else {
 			//return the global coordinate covered by the sprite map
@@ -40,18 +46,19 @@ class application: public pixelMap {
 			int local_bottom = topLeftY + dimy > 64 ? 64 - topLeftY : dimy;
 			int local_left = topLeftX < 0 ? 0 - topLeftX : 0;
 			int local_right = topLeftX + dimx > 64 ? 64 - topLeftX : dimx;
-			return retuernDimensions {left, right, top, bottom,
+			return returnDimensions {left, right, top, bottom,
 				local_left, local_right, local_top, local_bottom };
 		}
 		return returnDimensions {0,0,0,0,0,0,0,0};
 
 	}
 	//assign sprite maps, noise maps, etc to the pixel array
-	void mapThePixels(uint8_t array[4096]){
+	void mapper(std::vector<uint8_t> &map){
+		rulesEnforcer(map);
 		for(auto x: layer_vec){
-			for(auto y: x->sprite_vec){
-				auto [topLeftX,topLeftY] = y->getPosition();
-				auto [dimx,dimy] = y->getDimensions();
+			for(auto y: x.sprite_vec){
+				auto [topLeftX,topLeftY] = y.getPosition();
+				auto [dimx,dimy] = y.getDimensions();
 				auto [g_left, g_right, g_top, g_bottom, l_left, l_right, l_top, l_bottom] = 
 					pixelCuller(topLeftX, topLeftY, dimx, dimy);
 				//-----variables used for iteration-------
@@ -60,14 +67,14 @@ class application: public pixelMap {
 				int line_characters_counter = 0;
 				//--------------------------------------
 				while(i < 64*g_bottom + g_right){
-					array[i] = y.at(j);
-					if(counter == l_left - l_right){
+					map[i] = y.at(j);
+					if(line_characters_counter == l_left - l_right){
 						i += 64;
 						j += l_right - l_left;
-						counter = 0;
+						line_characters_counter = 0;
 					}
 					else {
-					counter++;
+					line_characters_counter++;
 					i++;
 					j++;
 					}
@@ -77,8 +84,12 @@ class application: public pixelMap {
 	}
 	public:
 	void begin(){
-		mainLoop(mapThePixels);	
+		mainLoop();	
 	}
-}
+	//called to add new rules to the app
+	void setRules(std::vector<RULE*> arg){
+		rule_book = arg;
+	}
+};
 
 #endif
