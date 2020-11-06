@@ -1,8 +1,8 @@
 # pixel
-An implementation on top of SFML for efficiently rendering pixel formats and for making video games. Really easily. But not a lot of vide games. It's pretty sparse right now.
 
 ![pixelatedlady](https://user-images.githubusercontent.com/56124831/98348711-1b6ba500-203f-11eb-933d-a4db1585a850.png)
 
+Pixel is the lady mascot depicted above, and an implementation on top of SFML for efficiently rendering pixel formats and for making video games. Really easily. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable.
 
 # Building
     chmod a+x give_me_exec.sh
