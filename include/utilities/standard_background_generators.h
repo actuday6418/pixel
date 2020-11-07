@@ -11,7 +11,8 @@ class background {
 				array[i] = (uint8_t) 255;
 			else
 				array[i] = (uint8_t) 0;
-	}}
+		}
+	}
 	//use for generating plain white backgrounds
 	    static void white(std::vector < uint8_t > &array) {
 		for (int i = 0; i < array.size(); i++) {

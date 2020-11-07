@@ -20,7 +20,7 @@ class sprite {
 	//set the position of the top left of the sprite map.
 	    void setPosition(int posx, int posy) {
 		topLeftX = posx;
-		topLeftX = posy;
+		topLeftY = posy;
 	}
 	uint8_t at(int index) {
 		return map[index];

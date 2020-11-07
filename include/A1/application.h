@@ -25,8 +25,7 @@ class application:public pixelMap {
 	void rulesEnforcer(std::vector < uint8_t > &map) {
 		for (auto r:rule_book) {
 			r(map);
-		}
-	}
+	}}
 	//returns the bounds of the part of a sprite that is visible
 	    auto pixelCuller(int topLeftX, int topLeftY, int dimx, int dimy) {
 		struct returnDimensions {
@@ -36,6 +35,8 @@ class application:public pixelMap {
 		if (topLeftY > 64 || topLeftY + dimy < 0 || topLeftX > 255
 		    || topLeftX + dimx < 0) {
 			std::cout << "Zilch";
+			return returnDimensions {
+			0, 0, 0, 0, 0, 0, 0, 0};
 		} else {
 			//return the global coordinate covered by the sprite map
 			int left = std::max(topLeftX, 0);
@@ -55,8 +56,6 @@ class application:public pixelMap {
 			            local_left, local_right, local_top,
 			            local_bottom};
 		}
-		return returnDimensions {
-		0, 0, 0, 0, 0, 0, 0, 0};
 
 	}
 	//assign sprite maps, noise maps, etc to the pixel array
@@ -75,14 +74,15 @@ class application:public pixelMap {
 				int line_characters_counter = 0;
 
 				//--------------------------------------
-				while (i < 64 * g_bottom + g_right) {
-					map[i] = y.at(j);
+				while (i < 64 * (g_bottom - 1) + g_right) {
 					if (line_characters_counter ==
-					    l_left - l_right) {
-						i += 64;
-						j += l_right - l_left;
+					    l_right - l_left) {
+						i += 64 -
+						    line_characters_counter;
+						j += dimx - l_right + l_left;
 						line_characters_counter = 0;
 					} else {
+						map[i] = y.at(j);
 						line_characters_counter++;
 						i++;
 						j++;
