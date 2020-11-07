@@ -20,6 +20,7 @@ struct layer {
 
 class application:public pixelMap {
 	std::vector < layer > layer_vec;
+	//contains the set of rules that are called each frame.
 	std::vector < RULE * >rule_book;
 	//internal function for rules callback
 	void rulesEnforcer(std::vector < uint8_t > &map) {
@@ -99,9 +100,28 @@ class application:public pixelMap {
 	void setRules(std::vector < RULE * >arg) {
 		rule_book = arg;
 	}
+	void setSpritePosition(int layer, int sprite, int posx, int posy){
+		layer_vec[layer].sprite_vec[sprite].setPosition(posx, posy);
+	}
+	auto getSpritePosition(int layer, int sprite){
+		struct pos { int x;	int y;};
+		return pos {layer_vec[layer].sprite_vec[sprite].topLeftX, 
+			    layer_vec[layer].sprite_vec[sprite].topLeftY};
+	}
 	//called to add layers to the app
 	void addLayer(layer arg) {
 		layer_vec.push_back(arg);
+	}
+	void getNumberOfLayers(){
+		return layer_vec.size();
+	}
+	void layerAt(int i){
+		if(i >= layer_vec.size()){
+			throw "Out of bounds call to layer vec. Returning NULL\n";
+		}
+		else{
+			return layer_vec[i];
+		}
 	}
 };
 

@@ -38,9 +38,6 @@ class pixelMap {
 	void setTickFactor(int fac) {
 		tik_factor = fac;
 	}
-	//override this function for updates each tick.
-	virtual void tickTok() {
-	}
 	//contains main loop
 	void mainLoop() {
 		sf::Clock clock;
@@ -49,7 +46,6 @@ class pixelMap {
 
 		while (window.isOpen()) {
 			if (tick == FPS / tik_factor) {
-				tickTok();
 				new_sec =
 				    (int)clock.getElapsedTime().asSeconds();
 				delta = new_sec - prev_sec;

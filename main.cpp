@@ -1,5 +1,6 @@
 #include<iostream>
 #include "include/A1/application.h"
+#include "include/A1/keyboard.h"
 #include "include/utilities/standard_background_generators.h"
 
 using namespace std;
@@ -7,23 +8,18 @@ using namespace std;
 //First define whatever rules (functions that are run each frame of the game) you want
 //as lambdas. Each rule must take a passed by reference vector of uint8_ts as an array 
 //and return a boolean value that represents success / failure.
-auto black_gen =[](vector < uint8_t > &array) { background::black(array);
-	return true;
-};
-
 auto noise_gen =
     [](vector < uint8_t > &array) { background::whiteNoise(array, rand());
 	return true;
 };
 
-//extend the application class
-class my:public application {
-	void tickTok() override {
-}};
+void print(application* app, void(application::*f)(int, int, int, int), int a, int b, int c, int d){
+	app->*f(a,b,c,d);
+}
 
 int main()
 {
-	my app;
+	application app;
 
 	srand(43);
 	//RULE is a function pointer type defined in application.h and representing
@@ -36,6 +32,7 @@ int main()
 	layer lay;
 
 	lay.addSprite("white.sprite", 20, 20, 25, 25);
+	print(&app, &application::setSpritePosition,0,0,0,0);
 	//Add your layer to the application once you're done defining it.
 	app.addLayer(lay);
 	//Let the games begin!!
