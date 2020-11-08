@@ -22,6 +22,10 @@ class sprite {
 		topLeftX = posx;
 		topLeftY = posy;
 	}
+	void transformPosition(int pox, int poy) {
+		topLeftX += pox;
+		topLeftY += poy;
+	}
 	uint8_t at(int index) {
 		return map[index];
 	}

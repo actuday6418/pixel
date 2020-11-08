@@ -34,6 +34,7 @@ class pixelMap {
 	}
 	//virtual function that has to be overriden by the user for updating pixel map each frame.
 	virtual void mapper(std::vector < uint8_t > &array) = 0;
+	virtual void eventsExec() = 0;
 
 	void setTickFactor(int fac) {
 		tik_factor = fac;
@@ -46,6 +47,7 @@ class pixelMap {
 
 		while (window.isOpen()) {
 			if (tick == FPS / tik_factor) {
+				eventsExec();
 				new_sec =
 				    (int)clock.getElapsedTime().asSeconds();
 				delta = new_sec - prev_sec;

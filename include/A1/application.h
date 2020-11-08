@@ -4,6 +4,7 @@
 #include "../A0/pixel.h"
 #include "sprite.h"
 #include<iostream>
+#include<string>
 
 using RULE = bool (std::vector < uint8_t > &);
 
@@ -22,11 +23,15 @@ class application:public pixelMap {
 	std::vector < layer > layer_vec;
 	//contains the set of rules that are called each frame.
 	std::vector < RULE * >rule_book;
+	std::vector < sf::Keyboard::Key > key_vec;
+	std::vector < void (*)(application *) > fun_vec;
+
 	//internal function for rules callback
 	void rulesEnforcer(std::vector < uint8_t > &map) {
 		for (auto r:rule_book) {
 			r(map);
-	}}
+		}
+	}
 	//returns the bounds of the part of a sprite that is visible
 	    auto pixelCuller(int topLeftX, int topLeftY, int dimx, int dimy) {
 		struct returnDimensions {
@@ -92,6 +97,14 @@ class application:public pixelMap {
 			}
 		}
 	}
+	void eventsExec() {
+		for (int i = 0; i < key_vec.size(); i++) {
+			if (sf::Keyboard::isKeyPressed(key_vec[i])) {
+				fun_vec[i] (this);
+			}
+		}
+	}
+
  public:
 	void begin() {
 		mainLoop();
@@ -100,27 +113,45 @@ class application:public pixelMap {
 	void setRules(std::vector < RULE * >arg) {
 		rule_book = arg;
 	}
-	void setSpritePosition(int layer, int sprite, int posx, int posy){
-		layer_vec[layer].sprite_vec[sprite].setPosition(posx, posy);
+	void addKeyboardRule(sf::Keyboard::Key k,
+		             void (*function)(application * app)) {
+		key_vec.push_back(k);
+		fun_vec.push_back(function);
 	}
-	auto getSpritePosition(int layer, int sprite){
-		struct pos { int x;	int y;};
-		return pos {layer_vec[layer].sprite_vec[sprite].topLeftX, 
-			    layer_vec[layer].sprite_vec[sprite].topLeftY};
+	void transformSpritePosition(int layer, int sprite, int movx, int movy) {
+		layer_vec[layer].sprite_vec[sprite].transformPosition(movx,
+		                                                      movy);
 	}
 	//called to add layers to the app
 	void addLayer(layer arg) {
 		layer_vec.push_back(arg);
 	}
-	void getNumberOfLayers(){
+	int getNumberOfLayers() {
 		return layer_vec.size();
 	}
-	void layerAt(int i){
-		if(i >= layer_vec.size()){
-			throw "Out of bounds call to layer vec. Returning NULL\n";
-		}
-		else{
+	layer layerAt(int i) {
+		if (i >= layer_vec.size()) {
+			throw
+			    "Out of bounds call to layer vec. Returning NULL\n";
+		} else {
 			return layer_vec[i];
+		}
+	}
+	static sf::Keyboard::Key key(std::string name) {
+		for (int i = 0; i < name.length(); i++) {
+			std::tolower(name[i]);
+		}
+		if (name == "left")
+			return sf::Keyboard::Left;
+		else if (name == "right")
+			return sf::Keyboard::Right;
+		else if (name == "up")
+			return sf::Keyboard::Up;
+		else if (name == "down")
+			return sf::Keyboard::Down;
+		else {
+			std::cout << "Invalid Key\n";
+			return sf::Keyboard::Up;
 		}
 	}
 };
