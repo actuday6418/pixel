@@ -5,6 +5,8 @@
 #include "sprite.h"
 #include<iostream>
 #include<string>
+#include<SFML/Audio.hpp>
+#include<cmath>
 
 using RULE = bool (std::vector < uint8_t > &);
 
@@ -25,6 +27,10 @@ class application:public pixelMap {
 	std::vector < RULE * >rule_book;
 	std::vector < sf::Keyboard::Key > key_vec;
 	std::vector < void (*)(application *) > fun_vec;
+	//variable declarations used for playing sound.
+	 sf::Sound soundBuff;
+	 std::vector < sf::Int16 > samples;
+	 sf::SoundBuffer buffer;
 
 	//internal function for rules callback
 	void rulesEnforcer(std::vector < uint8_t > &map) {
@@ -152,6 +158,22 @@ class application:public pixelMap {
 		else {
 			std::cout << "Invalid Key\n";
 			return sf::Keyboard::Up;
+		}
+	}
+	void playSound(float f = 440.0f, float a = 1.0f, const int SAMPLENO =
+		       44100) {
+		samples.clear();
+		if (soundBuff.getStatus() != sf::Sound::Status::Playing) {
+
+			for (int i = 0; i < SAMPLENO; i++) {
+				samples.push_back
+				    (a * 10000 *
+				     std::sin(f * (2.0f * 3.1415f) * i /
+				              44100));
+			}
+			buffer.loadFromSamples(&samples[0], SAMPLENO, 1, 44100);
+			soundBuff.setBuffer(buffer);
+			soundBuff.play();
 		}
 	}
 };

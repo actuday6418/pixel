@@ -14,24 +14,31 @@ auto noise_gen =
 	return true;
 };
 
+//The next step is to define Keyboard rules. These are functions that are called when a Keyboard event 
+//happens. Also illustrated within these functions are the call to playSound, which
+//takes frequency, amplitude and no. of samples (duration) as arguments.
 void move_left(application * app)
 {
 	app->transformSpritePosition(0, 0, -1, 0);
+	app->playSound(440.0f, 1.0f, 1000);
 }
 
 void move_down(application * app)
 {
 	app->transformSpritePosition(0, 0, 0, 1);
+	app->playSound(466.1f, 1.0f, 1000);
 }
 
 void move_up(application * app)
 {
 	app->transformSpritePosition(0, 0, 0, -1);
+	app->playSound(392.0f, 1.0f, 1000);
 }
 
 void move_right(application * app)
 {
 	app->transformSpritePosition(0, 0, 1, 0);
+	app->playSound(830.6f, 1.0f, 1000);
 }
 
 int main()
