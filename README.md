@@ -1,6 +1,6 @@
 # pixel
 
-Pixel is an implementation on top of SFML for efficiently rendering pixel formats and for making video games. Really easily. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable. Look at main.cpp for a detailed explanation on using the engine.
+Pixel is an implementation on top of SFML for efficiently making video games. Really easily. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable. Look at main.cpp for a detailed explanation on using the engine.
 
 # Building
     chmod a+x give_me_exec.sh
