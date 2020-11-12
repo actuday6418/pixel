@@ -2,6 +2,11 @@
 
 Pixel is a set of utilities on top of SFML for efficiently making video games. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable. Look at main.cpp for a detailed explanation on using the engine.
 
+Here's a demo of main.cpp running. There's a white noise background on top of which a sprite has been loaded and controlled with the keyboard, with sounds.
+
+![demo](https://user-images.githubusercontent.com/56124831/98981888-8f78e200-2544-11eb-8dfc-2d7bfa936dda.gif)
+
+
 # Building
     chmod a+x give_me_exec.sh
     mkdir build
