@@ -10,8 +10,9 @@ class background {
 			if (rand() % 2 == 0)
 				array[i] = (uint8_t) 255;
 			else
-				array[i] = (uint8_t) 0;
-	}}
+				array[i] = (uint8_t) 1;
+		}
+	}
 	//use for generating plain white backgrounds
 	    static void white(std::vector < uint8_t > &array) {
 		for (int i = 0; i < array.size(); i++) {
@@ -21,7 +22,7 @@ class background {
 	//use for generating plain black backgrounds
 	static void black(std::vector < uint8_t > &array) {
 		for (int i = 0; i < array.size(); i++) {
-			array[i] = 0;
+			array[i] = 1;
 		}
 	}
 };

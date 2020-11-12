@@ -89,17 +89,18 @@ class pixelMap {
 		std::vector < uint8_t > array(4096, 0);
 		mapper(array);
 		for (int k = 0, i = 0; k < 16384; k += 4, i++) {
-			if (array[i] == 0) {
-				varray[k].color = sf::Color::Black;
-				varray[k + 1].color = sf::Color::Black;
-				varray[k + 2].color = sf::Color::Black;
-				varray[k + 3].color = sf::Color::Black;
-			} else {
-				varray[k].color = sf::Color::White;
-				varray[k + 1].color = sf::Color::White;
-				varray[k + 2].color = sf::Color::White;
-				varray[k + 3].color = sf::Color::White;
-			}
+			varray[k].color =
+			    sf::Color(array[i], array[i], array[i],
+			              (uint8_t) 255);
+			varray[k + 1].color =
+			    sf::Color(array[i], array[i], array[i],
+			              (uint8_t) 255);
+			varray[k + 2].color =
+			    sf::Color(array[i], array[i], array[i],
+			              (uint8_t) 255);
+			varray[k + 3].color =
+			    sf::Color(array[i], array[i], array[i],
+			              (uint8_t) 255);
 		}
 	}
 };

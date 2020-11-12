@@ -36,8 +36,7 @@ class application:public pixelMap {
 	void rulesEnforcer(std::vector < uint8_t > &map) {
 		for (auto r:rule_book) {
 			r(map);
-		}
-	}
+	}}
 	//returns the bounds of the part of a sprite that is visible
 	    auto pixelCuller(int topLeftX, int topLeftY, int dimx, int dimy) {
 		struct returnDimensions {
@@ -94,7 +93,9 @@ class application:public pixelMap {
 						j += dimx - l_right + l_left;
 						line_characters_counter = 0;
 					} else {
-						map[i] = y.at(j);
+						if (y.at(j) != 0) {
+							map[i] = y.at(j);
+						}
 						line_characters_counter++;
 						i++;
 						j++;

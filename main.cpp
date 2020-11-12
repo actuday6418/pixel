@@ -1,6 +1,6 @@
 #include<iostream>
 #include "include/A1/application.h"
-#include "include/utilities/standard_background_generators.h"
+#include "include/utilities/background_generators.h"
 
 using namespace std;
 
@@ -60,7 +60,7 @@ int main()
 	app.addKeyboardRule(application::key("down"), move_down);
 	app.addKeyboardRule(application::key("right"), move_right);
 	app.setTickFactor(2);
-	lay.addSprite("white.sprite", 20, 20, 25, 25);
+	lay.addSprite("glass.sprite", 50, 50, 0, 0);
 	//Add your layer to the application once you're done defining it.
 	app.addLayer(lay);
 	//Let the games begin!!
