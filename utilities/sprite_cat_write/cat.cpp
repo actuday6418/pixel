@@ -24,7 +24,7 @@ main (int argc, char *argv[])
 	  cout<<(int)x<<" ";
 	  if(i%side_x == 0)	cout<<endl;
 	}
-      if(i != side_x*side_y)	cout<<"This sprite file is incomplete ";
+      if(i != side_x*side_y)	cout<<"This sprite file is incomplete. Coordinate "<< i%side_x<<" "<<i/side_x<<" was the last written.\n";
     }
   else
     cout << "Enter one argument - The name of the sprite file!\n";

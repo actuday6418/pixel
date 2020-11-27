@@ -10,8 +10,10 @@
 
 using RULE = bool (std::vector < uint8_t > &);
 
+//Layers don't have any functional importance right now, but they could turn out to be useful later on.
 struct layer {
 	std::vector < sprite > sprite_vec;
+	std::vector < animatedSprite > asprite_vec;
 	//add a new sprite to the sprite list.
 	void addSprite(std::string path, int side_x, int side_y, int posx,
 		       int posy) {
@@ -19,7 +21,15 @@ struct layer {
 		 s.loadSprite(path);
 		 s.setPosition(posx, posy);
 		 sprite_vec.push_back(s);
-}};
+	}
+	//add a new animated sprite to the list.
+	void addAnimSprite(std::string path, int side_x, int side_y, int posx, int posy, int nof) {
+		animatedSprite as(side_x, side_y, nof);
+		as.loadSprite(path);
+		as.setPosition(posx, posy);
+		asprite_vec.push_back(as);
+	}
+};
 
 class application:public pixelMap {
 	std::vector < layer > layer_vec;
@@ -73,6 +83,7 @@ class application:public pixelMap {
 	void mapper(std::vector < uint8_t > &map) {
 		rulesEnforcer(map);
 		for (auto x:layer_vec) {
+			//cull and map the sprites
 			for (auto y:x.sprite_vec) {
 				auto[topLeftX, topLeftY] = y.getPosition();
 				auto[dimx, dimy] = y.getDimensions();
@@ -101,6 +112,38 @@ class application:public pixelMap {
 						j++;
 					}
 				}
+			}
+			//cull and map the animated sprites
+			for (auto y:x.asprite_vec) {
+				auto[topLeftX, topLeftY] = y.getPosition();
+				auto[dimx, dimy] = y.getDimensions();
+				//g_ represents global (wrt whole map) and l_ local (wrt sprite) coordinate
+				auto[g_left, g_right, g_top, g_bottom, l_left,
+				     l_right, l_top, l_bottom] =
+				    pixelCuller(topLeftX, topLeftY, dimx, dimy);
+				//-----variables used for iteration-------
+				int i = 64 * g_top + g_left;
+				int j = dimx * l_top + l_left;
+				int line_characters_counter = 0;
+
+				//--------------------------------------
+				while (i < 64 * (g_bottom - 1) + g_right) {
+					if (line_characters_counter ==
+					    l_right - l_left) {
+						i += 64 -
+						    line_characters_counter;
+						j += dimx - l_right + l_left;
+						line_characters_counter = 0;
+					} else {
+						if (y.at(j) != 0) {
+							map[i] = y.at(j);
+						}
+						line_characters_counter++;
+						i++;
+						j++;
+					}
+				}
+				y.nextFrame();
 			}
 		}
 	}
