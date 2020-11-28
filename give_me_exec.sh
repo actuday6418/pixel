@@ -10,7 +10,7 @@ then
 	echo "${green}Build successful.."
 	echo "${white}Formatting code.."
 	cd ..
-	indent -bad -bap -as -ce -linux main.cpp include/A0/pixel.h include/utilities/background_generators.h include/A1/application.h include/A1/sprite.h
+	indent main.cpp include/A0/pixel.h include/utilities/background_generators.h include/A1/application.h include/A1/sprite.h
 	rm main.cpp~ include/A0/pixel.h~ include/utilities/background_generators.h~ include/A1/application.h~ include/A1/sprite.h~
 	echo 'Running executable..'
 	./build/app
