@@ -35,8 +35,7 @@ main (int argc, char *argv[])
 	}
 
       if(i != side_x*side_y*nof){
-	      cout<<"This sprite file is incomplete. Coordinate "<< i%side_x
-		      <<" "<<i/side_x<<" was the last written.\n";
+	      cout<<"\nThis sprite file is incomplete. "<<i<<" bytes were read of "<<side_x*side_y*nof<<"\n";
       }
     }
   else

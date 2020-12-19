@@ -66,8 +66,8 @@ main ()
   app.addKeyboardRule (application::key ("up"), move_up);
   app.addKeyboardRule (application::key ("down"), move_down);
   app.addKeyboardRule (application::key ("right"), move_right);
-  lay.addSprite ("glass.sprite", 60, 60, 0, 0);
-  lay.addAnimSprite ("animated.sprite", 20, 20, 0, 0, 4);
+  lay.addSprite ("glass.sprite", 64, 64, 0, 0);
+  lay.addAnimSprite ("animated.sprite", 64, 64, 0, 0, 17);
   //Add your layer to the application once you're done defining it.
   app.addLayer (lay);
   //Let the games begin!!
