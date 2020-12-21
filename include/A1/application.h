@@ -64,7 +64,7 @@ class application:public pixelMap
       int a, b, c, d, x, y, z, h;
     };
 
-    if (topLeftY > 64 || topLeftY + dimy < 0 || topLeftX > 255
+    if (topLeftY > 64 || topLeftY + dimy < 0 || topLeftX > 64
 	|| topLeftX + dimx < 0)
       {
 	std::cout << "Zilch";
