@@ -20,10 +20,10 @@ The sprite was made by converting a png to the .sprite format. You can use the s
 This script builds the app and performs code formatting. 
 
 # Using the framework
-The backest backend basically takes a vector of numbers representing the value of saturation for each pixel, and renders it. You may use this lower level interface by extending the pixelMap class. The application class wraps around pixelMap, provides functionality for sprites and keyboard events (TODO). Look at main.cpp for an example that uses this layer of abstraction.
+The backest backend basically takes a vector of numbers representing the value of saturation for each pixel, and renders it. You may use this lower level interface by extending the pixelMap class. The application class wraps around pixelMap, provides functionality for sprites, keyboard events and Audio. Look at main.cpp for an example that uses this layer of abstraction.
 
 # The sprite format
-Check out sprite.md. Sprite files contain metatadata and color values for a sprite a user would like to use in an app.
+Check out sprite.md. Sprite files defines metatadata and color values for a sprite a user would like to use in an app.
 
 # Dependencies 
 1. SFML
