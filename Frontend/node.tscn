@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://node.gd" type="Script" id=1]
+
+[node name="GraphNode" type="GraphNode"]
+margin_right = 453.0
+margin_bottom = 299.0
+rect_min_size = Vector2( 100, 100 )
+title = "New Node"
+show_close = true
+resizable = true
+script = ExtResource( 1 )
+
+[connection signal="close_request" from="." to="." method="_on_GraphNode_close_request"]
+[connection signal="resize_request" from="." to="." method="_on_GraphNode_resize_request"]
