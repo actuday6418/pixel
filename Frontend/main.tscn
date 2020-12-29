@@ -1,22 +1,16 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://OptionButton.gd" type="Script" id=2]
+[ext_resource path="res://PopupMenu.gd" type="Script" id=2]
 [ext_resource path="res://Button.gd" type="Script" id=3]
 
 [sub_resource type="InputEventKey" id=3]
-scancode = 80
-
-[sub_resource type="ShortCut" id=4]
-shortcut = SubResource( 3 )
-
-[sub_resource type="InputEventKey" id=1]
-alt = true
+shift = true
 pressed = true
 scancode = 65
 
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -28,24 +22,30 @@ margin_right = 1024.0
 margin_bottom = 598.0
 scroll_offset = Vector2( -350, -40 )
 
-[node name="OptionButton" type="OptionButton" parent="."]
-margin_left = 16.3401
-margin_top = 9.8145
-margin_right = 114.34
-margin_bottom = 41.8145
-shortcut = SubResource( 4 )
-text = "Node Type"
-clip_text = true
+[node name="PopupMenu" type="PopupMenu" parent="GraphEdit"]
+margin_left = -3.0
+margin_top = -49.0
+margin_right = 102.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 50, 50 )
+rect_scale = Vector2( 1.25, 1.25 )
 script = ExtResource( 2 )
 
-[node name="Button" type="Button" parent="."]
-margin_left = 124.604
-margin_top = 16.2829
-margin_right = 144.604
-margin_bottom = 36.283
-shortcut = SubResource( 2 )
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1022.0
+margin_bottom = 45.0
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+shortcut = SubResource( 4 )
 text = "+"
 script = ExtResource( 3 )
 
-[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="gui_input" from="GraphEdit" to="." method="_on_GraphEdit_gui_input"]
+[connection signal="popup_request" from="GraphEdit" to="." method="_on_GraphEdit_popup_request"]
+[connection signal="id_pressed" from="GraphEdit/PopupMenu" to="." method="_on_PopupMenu_id_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_Button_pressed"]

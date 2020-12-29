@@ -10,59 +10,66 @@ using namespace std;
 //and return a boolean value that represents success / failure.
 
 auto noise_gen =
-    [](vector < uint8_t > &array) { background::whiteNoise(array, rand());
-	return true;
+  [](vector < uint8_t > &array) { background::whiteNoise (array, rand ());
+  return true;
 };
 
 //The next step is to define Keyboard rules. These are functions that are called when a Keyboard event 
 //happens. Also illustrated within these functions are the call to playSound, which
 //takes frequency, amplitude and no. of samples (duration) as arguments.
-void move_left(application * app)
+void
+move_left (application * app)
 {
-	app->transformSpritePosition(0, 0, -1, 0);
-	app->playSound(440.0f, 1.0f, 1000);
+  app->transformSpritePosition (0, 0, -1, 0);
+  app->playSound (440.0f, 1.0f, 1000);
 }
 
-void move_down(application * app)
+void
+move_down (application * app)
 {
-	app->transformSpritePosition(0, 0, 0, 1);
-	app->playSound(466.1f, 1.0f, 1000);
+  app->transformSpritePosition (0, 0, 0, 1);
+  app->playSound (466.1f, 1.0f, 1000);
 }
 
-void move_up(application * app)
+void
+move_up (application * app)
 {
-	app->transformSpritePosition(0, 0, 0, -1);
-	app->playSound(392.0f, 1.0f, 1000);
+  app->transformSpritePosition (0, 0, 0, -1);
+  app->playSound (392.0f, 1.0f, 1000);
 }
 
-void move_right(application * app)
+void
+move_right (application * app)
 {
-	app->transformSpritePosition(0, 0, 1, 0);
-	app->playSound(830.6f, 1.0f, 1000);
+  app->transformSpritePosition (0, 0, 1, 0);
+  app->playSound (830.6f, 1.0f, 1000);
 }
 
-int main()
+int
+main ()
 {
-	application app;
+  application app;
 
-	srand(43);
-	//RULE is a function pointer type defined in application.h and representing
-	//a rule lambda. Create a vector of RULE* and push your rules into it.
-	vector < RULE * >rule_set;
-	rule_set.push_back(noise_gen);
-	//set your RULE* vector to be the application rule set.
-	app.setRules(rule_set);
-	//Use layers and sprites to load, display and animate sprites.
-	layer lay;
+  srand (43);
+  //RULE is a function pointer type defined in application.h and representing
+  //a rule lambda. Create a vector of RULE* and push your rules into it.
+  vector < RULE * >rule_set;
+  rule_set.push_back (noise_gen);
+  app.setFPS (60);
+  app.setTickFactor (17);
+  //set your RULE* vector to be the application rule set.
+  app.setRules (rule_set);
+  //Use layers and sprites to load, display and animate sprites.
+  layer lay;
 
-	app.addKeyboardRule(application::key("left"), move_left);
-	app.addKeyboardRule(application::key("up"), move_up);
-	app.addKeyboardRule(application::key("down"), move_down);
-	app.addKeyboardRule(application::key("right"), move_right);
-	app.setTickFactor(2);
-	lay.addSprite("glass.sprite", 60, 60, 0, 0);
-	//Add your layer to the application once you're done defining it.
-	app.addLayer(lay);
-	//Let the games begin!!
-	app.begin();
+  app.addKeyboardRule (application::key ("left"), move_left);
+  app.addKeyboardRule (application::key ("up"), move_up);
+  app.addKeyboardRule (application::key ("down"), move_down);
+  app.addKeyboardRule (application::key ("right"), move_right);
+  lay.addSprite ("glass.sprite", 64, 64, 0, 0);
+  lay.addAnimSprite ("animated.sprite", 64, 64, 0, 0, 17);
+  //Add your layer to the application once you're done defining it.
+  app.addLayer (lay);
+  //Let the games begin!!
+  app.begin ();
 }

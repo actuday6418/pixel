@@ -1,10 +1,5 @@
 extends OptionButton
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	add_item("Rule",0)
 	add_item("Sprite",1)
