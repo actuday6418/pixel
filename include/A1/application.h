@@ -30,7 +30,7 @@ struct layer
   {
     animatedSprite as (side_x, side_y, nof);
 
-    as.loadSprite (path);	//segfaulting
+    as.loadSprite (path);
     as.setPosition (posx, posy);
     asprite_vec.push_back (as);
   }
@@ -207,6 +207,11 @@ public:
   void transformSpritePosition (int layer, int sprite, int movx, int movy)
   {
     layer_vec[layer].sprite_vec[sprite].transformPosition (movx, movy);
+  }
+  void transformAnimatedSpritePosition (int layer, int sprite, int movx,
+					int movy)
+  {
+    layer_vec[layer].asprite_vec[sprite].transformPosition (movx, movy);
   }
   //called to add layers to the app
   void addLayer (layer arg)

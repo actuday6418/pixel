@@ -9,8 +9,7 @@ using namespace std;
 //as lambdas. Each rule must take a passed by reference vector of uint8_ts as an array 
 //and return a boolean value that represents success / failure.
 
-auto noise_gen =
-  [](vector < uint8_t > &array) { background::whiteNoise (array, rand ());
+auto noise_gen =[](vector < uint8_t > &array) { background::white (array);
   return true;
 };
 
@@ -20,28 +19,28 @@ auto noise_gen =
 void
 move_left (application * app)
 {
-  app->transformSpritePosition (0, 0, -1, 0);
+  app->transformAnimatedSpritePosition (0, 0, -1, 0);
   app->playSound (440.0f, 1.0f, 1000);
 }
 
 void
 move_down (application * app)
 {
-  app->transformSpritePosition (0, 0, 0, 1);
+  app->transformAnimatedSpritePosition (0, 0, 0, 1);
   app->playSound (466.1f, 1.0f, 1000);
 }
 
 void
 move_up (application * app)
 {
-  app->transformSpritePosition (0, 0, 0, -1);
+  app->transformAnimatedSpritePosition (0, 0, 0, -1);
   app->playSound (392.0f, 1.0f, 1000);
 }
 
 void
 move_right (application * app)
 {
-  app->transformSpritePosition (0, 0, 1, 0);
+  app->transformAnimatedSpritePosition (0, 0, 1, 0);
   app->playSound (830.6f, 1.0f, 1000);
 }
 
@@ -55,7 +54,6 @@ main ()
   //a rule lambda. Create a vector of RULE* and push your rules into it.
   vector < RULE * >rule_set;
   rule_set.push_back (noise_gen);
-  app.setFPS (60);
   app.setTickFactor (17);
   //set your RULE* vector to be the application rule set.
   app.setRules (rule_set);
@@ -66,8 +64,7 @@ main ()
   app.addKeyboardRule (application::key ("up"), move_up);
   app.addKeyboardRule (application::key ("down"), move_down);
   app.addKeyboardRule (application::key ("right"), move_right);
-  lay.addSprite ("glass.sprite", 64, 64, 0, 0);
-  lay.addAnimSprite ("animated.sprite", 64, 64, 0, 0, 17);
+  lay.addAnimSprite ("animated.asprite", 8, 8, 0, 0, 2);
   //Add your layer to the application once you're done defining it.
   app.addLayer (lay);
   //Let the games begin!!

@@ -108,6 +108,7 @@ public:
     nof = nf;
     currFrame = 0;
   }
+
   void nextFrame ()
   {
     if (currFrame != nof - 1)
@@ -118,6 +119,12 @@ public:
       {
 	currFrame = 0;
       }
+  }
+
+  void transformPosition (int pox, int poy)
+  {
+    topLeftX += pox;
+    topLeftY += poy;
   }
 
   //load sprite data from a .sprite file
