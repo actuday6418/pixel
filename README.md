@@ -1,6 +1,6 @@
 # pixel
 
-Pixel is a set of utilities on top of SFML for efficiently making video games. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable. Look at main.cpp for a detailed explanation on using the engine.
+Pixel is a set of utilities on top of SFML for efficiently making video games. But not a lot of video games, cause it's pretty sparse right now. The code base is designed to be modular and easily hackable. Look at main.cpp for a detailed explanation on using it.
 
 Here's a demo of main.cpp running. There's a white noise background on top of which a sprite has been loaded and controlled with the keyboard, with sounds.
 The sprite was made by converting a png to the .sprite format. You can use the sprite file generator (https://github.com/actuday6418/sprite_maker) to make a sprite like this one. make sure the dimensions you use have the same aspect ratio as the PNG.

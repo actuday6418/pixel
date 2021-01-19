@@ -13,34 +13,37 @@ auto noise_gen =[](vector < uint8_t > &array) { background::white (array);
   return true;
 };
 
+//Rule that makes gravity
+void
+gravity (application * app)
+{
+  if (app->getLayer (0)->asprite_vec[0].getPosition ().y != 56)
+    {
+      app->getLayer (0)->asprite_vec[0].transformPosition (0, 1);
+    }
+}
+
 //The next step is to define Keyboard rules. These are functions that are called when a Keyboard event 
 //happens. Also illustrated within these functions are the call to playSound, which
 //takes frequency, amplitude and no. of samples (duration) as arguments.
 void
 move_left (application * app)
 {
-  app->transformAnimatedSpritePosition (0, 0, -1, 0);
+  app->getLayer (0)->asprite_vec[0].transformPosition (-1, 0);
   app->playSound (440.0f, 1.0f, 1000);
 }
 
 void
-move_down (application * app)
+jump (application * app)
 {
-  app->transformAnimatedSpritePosition (0, 0, 0, 1);
-  app->playSound (466.1f, 1.0f, 1000);
-}
-
-void
-move_up (application * app)
-{
-  app->transformAnimatedSpritePosition (0, 0, 0, -1);
+  app->getLayer (0)->asprite_vec[0].transformPosition (0, -3);
   app->playSound (392.0f, 1.0f, 1000);
 }
 
 void
 move_right (application * app)
 {
-  app->transformAnimatedSpritePosition (0, 0, 1, 0);
+  app->getLayer (0)->asprite_vec[0].transformPosition (1, 0);
   app->playSound (830.6f, 1.0f, 1000);
 }
 
@@ -51,20 +54,18 @@ main ()
 
   srand (43);
   //RULE is a function pointer type defined in application.h and representing
-  //a rule lambda. Create a vector of RULE* and push your rules into it.
-  vector < RULE * >rule_set;
-  rule_set.push_back (noise_gen);
-  app.setTickFactor (17);
-  //set your RULE* vector to be the application rule set.
-  app.setRules (rule_set);
+  //a lambda that taked the entire map and applies some transformation to it.
+  //add the canvas rule to the rule book
+  app.addRule (noise_gen);
+  app.addApplicationRule (gravity);
   //Use layers and sprites to load, display and animate sprites.
   layer lay;
+  app.setFPS (30);
 
   app.addKeyboardRule (application::key ("left"), move_left);
-  app.addKeyboardRule (application::key ("up"), move_up);
-  app.addKeyboardRule (application::key ("down"), move_down);
+  app.addKeyboardRule (application::key ("space"), jump);
   app.addKeyboardRule (application::key ("right"), move_right);
-  lay.addAnimSprite ("animated.asprite", 8, 8, 0, 0, 2);
+  lay.addAnimSprite ("animated.asprite", 8, 8, 0, 56, 2, 2);
   //Add your layer to the application once you're done defining it.
   app.addLayer (lay);
   //Let the games begin!!

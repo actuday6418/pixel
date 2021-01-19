@@ -102,11 +102,14 @@ class animatedSprite:public sprite
     std::vector < std::vector < uint8_t >> map;
   int currFrame;
 public:
+  int anim_factor;
   //constructor
-    animatedSprite (int side_x, int side_y, int nf):sprite (side_x, side_y)
+    animatedSprite (int side_x, int side_y, int nf,
+		    int anim_fac):sprite (side_x, side_y)
   {
     nof = nf;
     currFrame = 0;
+    anim_factor = anim_fac;
   }
 
   void nextFrame ()
@@ -121,11 +124,6 @@ public:
       }
   }
 
-  void transformPosition (int pox, int poy)
-  {
-    topLeftX += pox;
-    topLeftY += poy;
-  }
 
   //load sprite data from a .sprite file
   int loadSprite (std::string path)

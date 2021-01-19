@@ -9,8 +9,6 @@ class pixelMap
 protected:
   sf::VertexArray varray;
   sf::RenderWindow window;
-  bool log;
-  int tik_factor;
   //default value is sixty
   int FPS;
 
@@ -19,9 +17,7 @@ public:
 						   "New Window")
   {
     setPositions ();
-    tik_factor = 1;
     FPS = 60;
-    log = false;
   };
 
   void setTitle (const std::string & title)
@@ -33,37 +29,21 @@ public:
     window.setFramerateLimit (FPS);
     this->FPS = FPS;
   }
-  void logger ()
-  {
-    log = true;
-  }
   //virtual function that has to be overriden by the user for updating pixel map each frame.
   virtual void mapper (std::vector < uint8_t > &array) = 0;
-  virtual void eventsExec () = 0;
+  virtual void eventsExec (int frame) = 0;
 
-  void setTickFactor (int fac)
-  {
-    tik_factor = fac;
-  }
   //contains main loop
   void mainLoop ()
   {
     sf::Clock clock;
     int tick = 1;
     int delta = 0, prev_sec = 0, new_sec;
+    int frame = 1;
 
     while (window.isOpen ())
       {
-	if (tick == FPS / tik_factor)
-	  {
-	    eventsExec ();
-	    new_sec = (int) clock.getElapsedTime ().asSeconds ();
-	    delta = new_sec - prev_sec;
-	    if (log)
-	      std::cout << "Time to " << FPS <<
-		" frames: " << delta << std::endl;
-	    tick = 1;
-	  }
+	eventsExec (frame);
 	sf::Event event;
 	while (window.pollEvent (event))
 	  {
@@ -75,7 +55,14 @@ public:
 	setColors ();
 	window.draw (varray);
 	window.display ();
-	tick++;
+	if (frame == FPS)
+	  {
+	    frame = 1;
+	  }
+	else
+	  {
+	    frame++;
+	  }
       }
   }
   //called once during construction to set positions of each pixel

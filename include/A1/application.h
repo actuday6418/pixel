@@ -26,9 +26,9 @@ struct layer
   }
   //add a new animated sprite to the list.
   void addAnimSprite (std::string path, int side_x, int side_y,
-		      int posx, int posy, int nof)
+		      int posx, int posy, int nof, int anim_factor = 1)
   {
-    animatedSprite as (side_x, side_y, nof);
+    animatedSprite as (side_x, side_y, nof, anim_factor);
 
     as.loadSprite (path);
     as.setPosition (posx, posy);
@@ -42,7 +42,8 @@ class application:public pixelMap
   //contains the set of rules that are called each frame.
   std::vector < RULE * >rule_book;
   std::vector < sf::Keyboard::Key > key_vec;
-  std::vector < void (*) (application *) > fun_vec;
+  std::vector < void (*) (application *) > kfun_vec;
+    std::vector < void (*) (application *) > fun_vec;
   //variable declarations used for playing sound.
     sf::Sound soundBuff;
     std::vector < sf::Int16 > samples;
@@ -169,21 +170,29 @@ class application:public pixelMap
 	  }
       }
   }
-  void eventsExec ()
+  void eventsExec (int frame)
   {
     for (int i = 0; i < key_vec.size (); i++)
       {
 	if (sf::Keyboard::isKeyPressed (key_vec[i]))
 	  {
-	    fun_vec[i] (this);
+	    kfun_vec[i] (this);
 	  }
       }
+  for (auto fn:fun_vec)
+      {
+	fn (this);
+      }
+
   for (auto & x:layer_vec)
       {
 	//cull and map the sprites
       for (auto & y:x.asprite_vec)
 	  {
-	    y.nextFrame ();
+	    if (frame % y.anim_factor == 0)
+	      {
+		y.nextFrame ();
+	      }
 	  }
       }
   }
@@ -194,24 +203,23 @@ public:
     mainLoop ();
   }
   //called to add new rules to the app
-  void setRules (std::vector < RULE * >arg)
+  void addRule (RULE * arg)
   {
-    rule_book = arg;
+    rule_book.push_back (arg);
   }
   void addKeyboardRule (sf::Keyboard::Key k,
 			void (*function) (application * app))
   {
     key_vec.push_back (k);
+    kfun_vec.push_back (function);
+  }
+  void addApplicationRule (void (*function) (application * app))
+  {
     fun_vec.push_back (function);
   }
-  void transformSpritePosition (int layer, int sprite, int movx, int movy)
+  layer *getLayer (int layer_i)
   {
-    layer_vec[layer].sprite_vec[sprite].transformPosition (movx, movy);
-  }
-  void transformAnimatedSpritePosition (int layer, int sprite, int movx,
-					int movy)
-  {
-    layer_vec[layer].asprite_vec[sprite].transformPosition (movx, movy);
+    return &layer_vec[layer_i];
   }
   //called to add layers to the app
   void addLayer (layer arg)
@@ -247,6 +255,8 @@ public:
       return sf::Keyboard::Up;
     else if (name == "down")
       return sf::Keyboard::Down;
+    else if (name == "space")
+      return sf::Keyboard::Space;
     else
       {
 	std::cout << "Invalid Key\n";
